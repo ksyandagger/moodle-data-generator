@@ -15,9 +15,8 @@ $settings['post-cleanup'] = false;
 $settings['time-limit'] = 0;
 $settings['verbose'] = false;
 $settings['quiet'] = false;
-$settings['ignore-errors'] = false;
-$settings['tiny'] = false;
 $settings['no-data'] = false;
+$settings['ignore-errors'] = false;
 $settings['number-of-courses'] = 1;
 $settings['number-of-students'] = 250;
 $settings['students-per-course'] = 20;
@@ -25,37 +24,72 @@ $settings['number-of-sections'] = 10;
 $settings['number-of-modules'] = 50;
 $settings['questions-per-course'] = 20;
 $settings['questions-per-quiz'] = 5;
+$settings['entries-per-glossary'] = 1;
 $settings['assignment-grades'] = true;
 $settings['quiz-grades'] = true;
+$settings['modules-list'] = array('forum' => 'forum',
+                                  'assignment' => 'assignment',
+                                  'glossary' => 'glossary',
+                                  'quiz' => 'quiz',
+                                  'comments' => 'comments',
+                                  'feedback' => 'feedback',
+                                  'label' => 'label',
+                                  'lesson' => 'lesson',
+                                  'chat' => 'chat',
+                                  'choice' => 'choice',
+                                  'resource' => 'resource',
+                                  'survey' => 'survey',
+                                  'wiki' => 'wiki',
+                                  'workshop' => 'workshop');
 $settings['username'] = null;
 $settings['password'] = null;
 $settings['eolchar'] = '<br />'; // Character used to break lines
 
 // Argument arrays: 0=>short name, 1=>long name
 $arguments = array(
- array('short'=>'u', 'long'=>'username', 'help' => 'Your moodle username', 'type'=>'STRING', 'default' => ''),
- array('short'=>'pw', 'long'=>'password', 'help' => 'Your moodle password', 'type'=>'STRING', 'default' => ''),
- array('short'=>'p', 'long'=>'data-prefix', 'help' => 'An optional prefix prepended to the unique identifiers of the generated data. Default=test_',
-       'type'=>'STRING', 'default' => 'test_'),
- array('short'=>'P', 'long' => 'database-prefix', 'help' => 'Database prefix to use: tables must already exist or the script will abort!', 'type'=>'STRING', 'default' => $CFG->prefix),
+ array('short'=>'u', 'long'=>'username',
+    'help' => 'Your moodle username', 'type'=>'STRING', 'default' => ''),
+ array('short'=>'pw', 'long'=>'password',
+    'help' => 'Your moodle password', 'type'=>'STRING', 'default' => ''),
+ array('short'=>'p', 'long'=>'data-prefix',
+    'help' => 'An optional prefix prepended to the unique identifiers of the generated data. Default=test_',
+    'type'=>'STRING', 'default' => 'test_'),
+ array('short'=>'P', 'long' => 'database-prefix',
+    'help' => 'Database prefix to use: tables must already exist or the script will abort!',
+    'type'=>'STRING', 'default' => $CFG->prefix),
  array('short'=>'c', 'long' => 'pre-cleanup', 'help' => 'Delete previously generated data'),
- array('short'=>'C', 'long' => 'post-cleanup', 'help' => 'Deletes all generated data at the end of the script (for benchmarking of generation only)'),
- array('short'=>'t', 'long' => 'time-limit', 'help' => 'Optional time limit after which to abort the generation, 0 = no limit. Default=0',
-       'type'=>'SECONDS', 'default' => 0),
+ array('short'=>'C', 'long' => 'post-cleanup',
+    'help' => 'Deletes all generated data at the end of the script (for benchmarking of generation only)'),
+ array('short'=>'t', 'long' => 'time-limit',
+    'help' => 'Optional time limit after which to abort the generation, 0 = no limit. Default=0',
+    'type'=>'SECONDS', 'default' => 0),
  array('short'=>'v', 'long' => 'verbose', 'help' => 'Display extra information about the data generation'),
  array('short'=>'q', 'long' => 'quiet', 'help' => 'Inhibits all outputs'),
  array('short'=>'i', 'long' => 'ignore-errors', 'help' => 'Continue script execution when errors occur'),
  array('short'=>'N', 'long' => 'no-data', 'help' => 'Generate nothing (used for cleaning up only)'),
  array('short'=>'T', 'long' => 'tiny', 'help' => 'Generates a tiny data set (1 of each course, module, user and section)'),
- array('short'=>'nc', 'long' => 'number-of-courses', 'help' => 'The number of courses to generate. Default=1', 'type'=>'NUMBER', 'default' => 1),
- array('short'=>'ns', 'long' => 'number-of-students', 'help' => 'The number of students to generate. Default=250', 'type'=>'NUMBER', 'default' => 250),
- array('short'=>'sc', 'long' => 'students-per-course', 'help' => 'The number of students to enrol in each course. Default=20', 'type'=>'NUMBER', 'default' => 20),
- array('short'=>'nsec', 'long' => 'number-of-sections', 'help' => 'The number of sections to generate in each course. Default=10', 'type'=>'NUMBER', 'default' => 10),
- array('short'=>'nmod', 'long' => 'number-of-modules',  'help' => 'The number of modules to generate in each section. Default=10', 'type'=>'NUMBER', 'default' => 10),
- array('short'=>'ag', 'long' => 'assignment-grades', 'help' => 'Generate random grades for each student/assignment tuple', 'default' => true),
- array('short'=>'qg', 'long' => 'quiz-grades', 'help' => 'Generate random grades for each student/quiz tuple', 'default' => true),
- array('short'=>'nq', 'long' => 'questions-per-course',  'help' => 'The number of questions to generate per course. Default=20', 'type'=>'NUMBER', 'default' => 20),
- array('short'=>'qq', 'long' => 'questions-per-quiz',  'help' => 'The number of questions to assign to each quiz. Default=5', 'type'=>'NUMBER', 'default' => 5),
+ array('short'=>'nc', 'long' => 'number-of-courses',
+    'help' => 'The number of courses to generate. Default=1', 'type'=>'NUMBER', 'default' => 1),
+ array('short'=>'ns', 'long' => 'number-of-students',
+    'help' => 'The number of students to generate. Default=250', 'type'=>'NUMBER', 'default' => 250),
+ array('short'=>'sc', 'long' => 'students-per-course',
+    'help' => 'The number of students to enrol in each course. Default=20', 'type'=>'NUMBER', 'default' => 20),
+ array('short'=>'nsec', 'long' => 'number-of-sections',
+    'help' => 'The number of sections to generate in each course. Default=10', 'type'=>'NUMBER', 'default' => 10),
+ array('short'=>'nmod', 'long' => 'number-of-modules',
+    'help' => 'The number of modules to generate in each section. Default=10', 'type'=>'NUMBER', 'default' => 10),
+ array('short'=>'mods', 'long' => 'modules-list',
+    'help' => 'The list of modules you want to generate', 'default' => $settings['modules-list'], 'type' => 'mod1,mod2...'),
+ array('short'=>'ag', 'long' => 'assignment-grades',
+    'help' => 'Generate random grades for each student/assignment tuple', 'default' => true),
+ array('short'=>'qg', 'long' => 'quiz-grades',
+    'help' => 'Generate random grades for each student/quiz tuple', 'default' => true),
+ array('short'=>'eg', 'long' => 'entries-per-glossary',
+    'help' => 'The number of definitions to generate per glossary. Default=0', 'type'=>'NUMBER', 'default' => 1),
+ array('short'=>'nq', 'long' => 'questions-per-course',
+    'help' => 'The number of questions to generate per course. Default=20', 'type'=>'NUMBER', 'default' => 20),
+ array('short'=>'qq', 'long' => 'questions-per-quiz',
+    'help' => 'The number of questions to assign to each quiz. Default=5', 'type'=>'NUMBER', 'default' => 5),
 );
 
 // Building the USAGE output of the command line version
@@ -107,6 +141,9 @@ if (isset($argv) && isset($argc)) {
                 unset($argv[$arg_array['long']]);
             }
             if (!is_null($value)) {
+                if (!empty($arg_array['type']) && $arg_array['type'] == 'mod1,mod2...') {
+                    $value = explode(',', $value);
+                }
                 $settings[$arg_array['long']] = $value;
                 $argscount++;
             }
@@ -136,14 +173,20 @@ $systemcontext = get_context_instance(CONTEXT_SYSTEM);
 
 class generator_form extends moodleform {
     function definition() {
-        global $arguments;
+        global $arguments, $settings;
         $mform =& $this->_form;
 
         foreach ($arguments as $arg_array) {
             $type = 'advcheckbox';
+            $options = null;
+            $htmloptions = null;
 
             $label = ucfirst(str_replace('-', ' ', $arg_array['long']));
-            if (!empty($arg_array['type'])) {
+            if (!empty($arg_array['type']) && $arg_array['type'] == 'mod1,mod2...') {
+                $type = 'select';
+                $options = $settings['modules-list'];
+                $htmloptions = array('multiple' => 'multiple');
+            } elseif (!empty($arg_array['type'])) {
                 $type = 'text';
             }
 
@@ -151,7 +194,7 @@ class generator_form extends moodleform {
                 continue;
             }
 
-            $mform->addElement($type, $arg_array['long'], $label);
+            $mform->addElement($type, $arg_array['long'], $label, $options, $htmloptions);
             $mform->setHelpButton($arg_array['long'], array(false, $label, false, true, false, $arg_array['help']));
 
             if (isset($arg_array['default'])) {
@@ -177,8 +220,9 @@ if (!is_null($settings['database-prefix'])) {
 
     foreach ($tables as $table) {
         require_once($CFG->libdir . '/ddllib.php');
+        $dbman = $DB->get_manager();
         $xmltable = new XMLDBTable($table);
-        if (!table_exists($xmltable)) {
+        if (!$dbman->table_exists($xmltable)) {
             $table_errors[] = $settings['database-prefix'] . $table;
         }
     }
@@ -319,7 +363,7 @@ if ($run_script) {
         shuffle($lastnames);
         shuffle($firstnames);
 
-        $next_user_id = get_field_sql("SELECT MAX(id) FROM {$CFG->prefix}user") + 1;
+        $next_user_id = $DB->get_field_sql("SELECT MAX(id) FROM {user}") + 1;
         for ($i = 0; $i < $settings['number-of-students']; $i++) {
 
             $lastname = trim(ucfirst(strtolower($lastnames[rand(0, count($lastnames) - 1)])));
@@ -339,7 +383,7 @@ if ($run_script) {
             $user->lang        = $CFG->lang;
             $user->timemodified= time();
 
-            if (!$user->id = insert_record("user", $user)) {
+            if (!$user->id = $DB->insert_record("user", $user)) {
                 verbose("Error inserting a user in the database! Aborting the script!");
                 if (!$settings['ignore-errors']) {
                     die();
@@ -361,7 +405,7 @@ if ($run_script) {
          */
         verbose("Generating {$settings['number-of-courses']} courses...");
         $base_course = new stdClass();
-        $next_course_id = get_field_sql("SELECT MAX(id) FROM {$CFG->prefix}course") + 1;
+        $next_course_id = $DB->get_field_sql("SELECT MAX(id) FROM {course}") + 1;
 
         $base_course->MAX_FILE_SIZE = '2097152';
         $base_course->category = $CFG->defaultrequestcategory;
@@ -401,14 +445,16 @@ if ($run_script) {
          * MODULES GENERATION
          */
 
+        // Parse the modules-list variable
+
         verbose("Generating {$settings['number-of-sections']} sections with {$settings['number-of-modules']} modules in each section, for each course...");
-        $modules = get_records('modules', 'visible', 1);
+        $modules = $DB->get_records('modules', array('visible' => 1));
 
         foreach ($modules as $key => $module) {
             $module->count = 0;
 
             // Scorm, lams and hotpot are too complex to set up, remove them
-            if (in_array($module->name, $settings['modules-to-ignore'])) {
+            if (in_array($module->name, $settings['modules-to-ignore']) || !in_array($module->name, $settings['modules-list'])) {
                 unset($modules[$key]);
             }
         }
@@ -429,6 +475,7 @@ if ($run_script) {
 
         $quizzes = array();
         $assignments = array();
+        $glossaries = array();
 
         if (count($courses) > 0) {
             $libraries = array();
@@ -441,7 +488,7 @@ if ($run_script) {
                         $module = new stdClass();
 
                         // If only one module is created, and we also need to add a question to a quiz, create only a quiz
-                        if ($settings['number-of-modules'] == 1 && $settings['questions-per-quiz'] > 0) {
+                        if ($settings['number-of-modules'] == 1 && $settings['questions-per-quiz'] > 0 && !empty($modules[8])) {
                             $moduledata = $quizmodule;
                         } else {
                             $moduledata = $modules[array_rand($modules)];
@@ -480,16 +527,16 @@ if ($run_script) {
                                 $module->schedule = 1;
                                 $module->chattime = 60 * 60 * 4;
                                 break;
-                            case 'data':
-                                $module->intro = $description;
-                                $module->name = 'test';
-                                break;
                             case 'choice':
                                 $module->text = $content;
                                 $module->option = array('Good choice', 'Bad choice', 'No choice');
                                 $module->limit  = array(1, 5, 0);
                                 break;
                             case 'comments':
+                                $module->intro = $description;
+                                $module->comments = $content;
+                                break;
+                            case 'feedback':
                                 $module->intro = $description;
                                 $module->comments = $content;
                                 break;
@@ -604,22 +651,29 @@ if ($run_script) {
                         $module->section = $section->id;
                         $module->coursemodule = add_course_module($module);
                         $module->section = $i;
+
                         add_mod_to_section($module);
+
                         $module->cmidnumber = set_coursemodule_idnumber($module->coursemodule, '');
+
                         verbose("A $moduledata->name module was added to section $i (id $module->section) of course $courseid.");
-                        // verbose("Rebuilding course cache for course $courseid...");
                         rebuild_course_cache($courseid);
 
                         if ($moduledata->name == 'quiz') {
-                            $quiz_instance = get_field('course_modules', 'instance', 'id', $module->coursemodule);
-                            $quiz = get_record('quiz', 'id', $quiz_instance);
+                            $quiz_instance = $DB->get_field('course_modules', 'instance', array('id' => $module->coursemodule));
+                            $quiz = $DB->get_record('quiz', array('id' => $quiz_instance));
                             $quiz->instance = $quiz_instance;
                             $quizzes[] = $quiz;
                         } elseif ($moduledata->name == 'assignment') {
-                            $assignment_instance = get_field('course_modules', 'instance', 'id', $module->coursemodule);
-                            $assignment = get_record('assignment', 'id', $assignment_instance);
+                            $assignment_instance = $DB->get_field('course_modules', 'instance', array('id' => $module->coursemodule));
+                            $assignment = $DB->get_record('assignment', array('id' => $assignment_instance));
                             $assignment->instance = $assignment_instance;
                             $assignments[] = $assignment;
+                        } elseif ($moduledata->name == 'glossary') {
+                            $glossary_instance = $DB->get_field('course_modules', 'instance', array('id' => $module->coursemodule));
+                            $glossary = $DB->get_record('glossary', array('id' => $glossary_instance));
+                            $glossary->instance = $glossary_instance;
+                            $glossaries[] = $glossary;
                         }
                     }
                 }
@@ -653,6 +707,9 @@ if ($run_script) {
                     $supported_types = array('match', 'essay', 'multianswer', 'multichoice', 'shortanswer', 'numerical', 'truefalse', 'calculated');
                     $qtype = $supported_types[array_rand($supported_types)];
 
+                    if ($qtype == 'calculated') {
+                        continue;
+                    }
                     $classname = "question_{$qtype}_qtype";
                     if ($qtype == 'multianswer') {
                         $classname = "embedded_cloze_qtype";
@@ -716,7 +773,7 @@ if ($run_script) {
                     $newra->userid = $random_user;
                     $newra->hidden = 0;
                     $newra->enrol = 1;
-                    $success = insert_record('role_assignments', $newra);
+                    $success = $DB->insert_record('role_assignments', $newra);
 
                     if ($success) {
                         $assigned_count++;
@@ -725,7 +782,6 @@ if ($run_script) {
                         } else {
                             $assigned_users[$random_user]++;
                         }
-                        $course_users[$random_user][] = $courseid;
                         verbose("Student $random_user was assigned to course $courseid.");
                     } else {
                         verbose("Could not assign student $random_user to course $courseid!");
@@ -757,8 +813,7 @@ if ($run_script) {
                         $grade->grade = $random_grade;
                         $grade->rawgrade = $random_grade;
                         $grade->teacher = $USER->id;
-                        $grade->submissioncomment = 'OK';
-                        insert_record('assignment_submissions', $grade);
+                        $DB->insert_record('assignment_submissions', $grade);
                         grade_update('mod/assignment', $courseid, 'mod', 'assignment', $assignment->id, 0, $grade);
                         verbose("A grade ($random_grade) has been given to user $userid for assignment $assignment->id");
                         $grades_count++;
@@ -783,7 +838,7 @@ if ($run_script) {
                         $grade->userid = $userid;
                         $grade->grade = $random_grade;
                         $grade->rawgrade = $random_grade;
-                        insert_record('quiz_grades', $grade);
+                        $DB->insert_record('quiz_grades', $grade);
                         grade_update('mod/quiz', $courseid, 'mod', 'quiz', $quiz->id, 0, $grade);
                         verbose("A grade ($random_grade) has been given to user $userid for quiz $quiz->id");
                         $grades_count++;
@@ -792,6 +847,32 @@ if ($run_script) {
             }
             echo "$grades_count quiz grades have been generated.{$settings['eolchar']}";
         }
+
+        /**
+         * GLOSSARY ENTRIES GENERATION
+         */
+        $entries_count = 0;
+        if ($settings['entries-per-glossary']) {
+            foreach ($glossaries as $glossary) {
+                for ($i = 0; $i < $settings['entries-per-glossary']; $i++) {
+                    $entry = new stdClass();
+                    $entry->glossaryid = $glossary->id;
+                    $entry->userid = $USER->id;
+                    $entry->concept = "Test concept";
+                    $entry->definition = "A test concept is nothing to write home about: just a test concept.";
+                    $entry->format = 1;
+                    $entry->timecreated = time();
+                    $entry->timemodified = time();
+                    $entry->teacherentry = 0;
+                    $entry->approved = 1;
+                    if ($DB->insert_record('glossary_entries', $entry)) {
+                        $entries_count++;
+                    }
+                }
+            }
+            echo "$entries_count glossary definitions have been generated.{$settings['eolchar']}";
+        }
+
     }
 
     /**
@@ -855,7 +936,7 @@ function verbose($string) {
  * The first method is safest, because it will not interfere with existing tables, but you have to create all the tables yourself.
  */
 function data_cleanup() {
-    global $settings, $tables;
+    global $settings, $tables, $DB;
 
     if ($settings['quiet']) {
         ob_start();
@@ -865,7 +946,7 @@ function data_cleanup() {
         foreach ($tables as $table_name) {
             // Don't empty a few tables
             if (!in_array($table_name, array('modules', 'block'))) {
-                if (delete_records($table_name)) {
+                if ($DB->delete_records($table_name)) {
                     verbose("Truncated table $table_name");
                 } else {
                     verbose("Could not truncate table $table_name");
@@ -877,7 +958,7 @@ function data_cleanup() {
         }
 
     } else { // Delete records in normal tables if no specific db prefix was given
-        $courses = get_records_select('course', "idnumber LIKE '{$settings['data-prefix']}%'", null, 'id');
+        $courses = $DB->get_records_select('course', "idnumber LIKE ?", array("{$settings['data-prefix']}%"), null, 'id');
 
         if (is_array($courses) && count($courses) > 0) {
             foreach ($courses as $course) {
@@ -893,7 +974,7 @@ function data_cleanup() {
         }
 
         verbose("Deleting test users (permanently)...");
-        if (!delete_records_select('user', "username LIKE '{$settings['data-prefix']}%'")) {
+        if (!$DB->delete_records_select('user', "username LIKE ?", array("{$settings['data-prefix']}%"))) {
             verbose("Error deleting users from the database");
             if (!$settings['ignore-errors']) {
                 die();
